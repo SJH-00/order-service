@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.*;
 
-class ProductTests {
+class ProductTest {
 
     @Test
     @DisplayName("재고보다 많은 수량을 차감하면 예외가 발생한다")

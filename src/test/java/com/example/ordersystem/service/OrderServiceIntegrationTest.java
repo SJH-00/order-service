@@ -12,7 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import static org.assertj.core.api.Assertions.*;
 
 @SpringBootTest
-class OrderServiceIntegrationTests {
+class OrderServiceIntegrationTest {
 
     @Autowired
     ProductService productService;
@@ -24,14 +24,14 @@ class OrderServiceIntegrationTests {
     OrderRepository orderRepository;
 
     @BeforeEach
-    void cleanUp() {
+    void tearDown() {
         productRepository.deleteAll();
         orderRepository.deleteAll();
     }
 
     @Test
-    @DisplayName("순차로 10번 주문하면 재고가 10 줄고, 주문이 10건 생성됨")
-    void placeOrder_success() {
+    @DisplayName("순차 주문 테스트")
+    void sequential_placeOrder() {
 
         // given
         // 재고가 100개인 상품 생성
