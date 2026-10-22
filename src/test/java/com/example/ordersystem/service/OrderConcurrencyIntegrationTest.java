@@ -50,4 +50,19 @@ class OrderConcurrencyIntegrationTest {
         int remainingStock = productRepository.findById(productId).orElseThrow().getStock();
         assertThat(initialStock - remainingStock).isEqualTo(successCount);
     }
+
+    @Test
+    @DisplayName("멀티스레드 정합성 테스트 - 재고 부족 시나리오")
+    void concurrent_placeOrder_when_stock_is_low() throws InterruptedException{
+
+        int initialStock = 100;
+        int requestCount = 300;
+        int threadCount = 20;
+        Long productId = productService.create("test product", 1000, initialStock);
+        Runnable task = () -> orderService.place(productId, 1);
+
+        int successCount = concurrencyLoadTemplate.run(requestCount, threadCount, task).successCount().get();
+
+        assertThat(successCount).isEqualTo(initialStock);
+    }
 }
