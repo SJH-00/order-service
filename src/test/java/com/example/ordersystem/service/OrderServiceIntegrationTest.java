@@ -3,6 +3,7 @@ package com.example.ordersystem.service;
 import com.example.ordersystem.domain.Product;
 import com.example.ordersystem.repository.OrderRepository;
 import com.example.ordersystem.repository.ProductRepository;
+import com.example.ordersystem.service.order.OrderPlacementStrategy;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,7 +18,7 @@ class OrderServiceIntegrationTest {
     @Autowired
     ProductService productService;
     @Autowired
-    OrderService orderService;
+    OrderPlacementStrategy orderService;
     @Autowired
     ProductRepository productRepository;
     @Autowired
@@ -40,7 +41,7 @@ class OrderServiceIntegrationTest {
         // when
         // 순차로 1개씩 10개 주문
         for(int i=0; i<10; i++)
-            orderService.placeOrder(productId, 1);
+            orderService.place(productId, 1);
 
         // then1
         // 재고는 90

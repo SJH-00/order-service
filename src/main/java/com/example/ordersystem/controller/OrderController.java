@@ -1,6 +1,6 @@
 package com.example.ordersystem.controller;
 
-import com.example.ordersystem.service.OrderService;
+import com.example.ordersystem.service.order.OrderPlacementStrategy;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
@@ -18,11 +18,11 @@ import java.net.URI;
 @RequiredArgsConstructor
 public class OrderController {
 
-    private final OrderService orderService;
+    private final OrderPlacementStrategy orderService;
 
     @PostMapping
     public ResponseEntity<Void> place(@Valid @RequestBody PlaceOrderRequest request) {
-        Long orderId = orderService.placeOrder(request.productId, request.quantity);
+        Long orderId = orderService.place(request.productId, request.quantity);
         return ResponseEntity.created(URI.create("/orders/" + orderId)).build();
     }
 

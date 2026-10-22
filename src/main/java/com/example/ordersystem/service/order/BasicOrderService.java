@@ -1,4 +1,4 @@
-package com.example.ordersystem.service;
+package com.example.ordersystem.service.order;
 
 import com.example.ordersystem.domain.Order;
 import com.example.ordersystem.domain.Product;
@@ -10,13 +10,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
-public class OrderService {
+public class BasicOrderService implements OrderPlacementStrategy {
 
     private final ProductRepository productRepository;
     private final OrderRepository orderRepository;
 
     @Transactional
-    public Long placeOrder(Long productId, int quantity) {
+    public Long place(Long productId, int quantity) {
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new IllegalArgumentException("상품을 찾을 수 없습니다."));
 
