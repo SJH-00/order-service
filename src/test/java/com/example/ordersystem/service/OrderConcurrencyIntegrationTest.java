@@ -45,7 +45,7 @@ class OrderConcurrencyIntegrationTest {
         Long productId = productService.create("test product", 1000, initialStock);
         Runnable task = () -> orderService.place(productId, 1);
 
-        int successCount = concurrencyLoadTemplate.run(requestCount, threadCount, task).successCount().get();
+        int successCount = concurrencyLoadTemplate.run(requestCount, threadCount, task).successCount();
 
         int remainingStock = productRepository.findById(productId).orElseThrow().getStock();
         assertThat(initialStock - remainingStock).isEqualTo(successCount);
@@ -61,7 +61,7 @@ class OrderConcurrencyIntegrationTest {
         Long productId = productService.create("test product", 1000, initialStock);
         Runnable task = () -> orderService.place(productId, 1);
 
-        int successCount = concurrencyLoadTemplate.run(requestCount, threadCount, task).successCount().get();
+        int successCount = concurrencyLoadTemplate.run(requestCount, threadCount, task).successCount();
 
         assertThat(successCount).isEqualTo(initialStock);
     }

@@ -29,7 +29,7 @@ public class ConcurrencyLoadTemplate {
                     long requestBegin = System.nanoTime();
                     task.run();
                     successCount.incrementAndGet();
-                    latency.recordValue(System.nanoTime() - requestBegin);
+                    latency.recordValue((System.nanoTime() - requestBegin) / 1000);
                 } catch (InterruptedException e) {
                     Thread.currentThread().interrupt();
                 } finally {
@@ -44,6 +44,6 @@ public class ConcurrencyLoadTemplate {
         long entireTime = System.nanoTime() - begin;
         executorService.shutdown();
 
-        return new ConcurrencyLoadResult(latency, entireTime, successCount);
+        return new ConcurrencyLoadResult(latency, entireTime, successCount.intValue());
     }
 }
